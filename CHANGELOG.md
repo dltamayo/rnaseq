@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Enhancements & fixes
+
+- Allow a pre-built STAR 2.7.2a index (`--star_index`) to be used with `--use_parabricks_star` instead of always rebuilding it from `--fasta` and `--gtf`
+- Skip the `--min_mapped_reads` filter for `--use_parabricks_star`, because `pbrun rna_fq2bam` writes its own log over `Log.final.out` and reports no uniquely-mapped percentage. Previously every sample parsed as 0% mapped and was dropped before RSeQC, featureCounts biotype QC and other BAM-based QC
+
 ## [[3.27.0](https://github.com/nf-core/rnaseq/releases/tag/3.27.0)] - 2026-09-23
 
 ### Credits

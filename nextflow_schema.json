@@ -137,7 +137,7 @@
                     "format": "path",
                     "exists": true,
                     "fa_icon": "fas fa-bezier-curve",
-                    "description": "Path to directory or tar.gz archive for pre-built STAR index."
+                    "description": "Path to directory or tar.gz archive for pre-built STAR index. With `--use_parabricks_star` the index must be built with STAR 2.7.2a; if omitted, an index is built from `--fasta` and `--gtf`."
                 },
                 "hisat2_index": {
                     "type": "string",

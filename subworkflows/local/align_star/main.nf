@@ -66,7 +66,11 @@ workflow ALIGN_STAR {
     ch_bam_transcript = ch_star_out.out.bam_transcript
     ch_fastq = ch_star_out.out.fastq
     ch_tab = ch_star_out.out.tab
-    ch_percent_mapped = ch_log_final.map { meta, log -> [ meta, getStarPercentMapped(params, log) ] }
+    // pbrun writes its own log over Log.final.out and reports no uniquely-mapped percentage, so no
+    // value is emitted for Parabricks and the --min_mapped_reads filter does not apply
+    ch_percent_mapped = use_parabricks_star
+        ? channel.empty()
+        : ch_log_final.map { meta, log -> [ meta, getStarPercentMapped(params, log) ] }
 
     //
     // Sort, index BAM file and run samtools stats, flagstat and idxstats

@@ -146,8 +146,9 @@ workflow PREPARE_GENOME_INDICES {
     //----------------------------------------------------
     ch_star_index = channel.empty()
     if (prepare_tool_indices.intersect(['star_salmon', 'star_rsem'])) {
-        if (use_parabricks_star && fasta_provided) {
-            // Parabricks needs its own STAR index built with its bundled STAR version
+        if (use_parabricks_star && fasta_provided && !star_index) {
+            // Parabricks needs a STAR 2.7.2a-compatible index. Build one unless the user supplied a
+            // pre-built index (built with STAR 2.7.2a), which skips the rebuild below
             ch_star_index = PARABRICKS_STARGENOMEGENERATE(
                 ch_fasta.map { item -> [ [:], item ] },
                 ch_gtf.map   { item -> [ [:], item ] }
